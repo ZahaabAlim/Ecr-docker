@@ -23,18 +23,19 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
  
       - name: Build Docker Image
-       run: docker build -t my-docker-image .
-     - name: Tag Docker Image
-       run: docker tag my-docker-image ${{ secrets.AWS_ECR_REGISTRY }}/my-docker-image:${{ github.sha }}
-     - name: Push Docker Image to ECR
-       run: docker push ${{ secrets.AWS_ECR_REGISTRY }}/my-docker-image:${{ github.sha }}
-     - name: Cleanup Docker Images
-       run: |
-         # Define the number of images to keep (e.g., 5)
-         keep_latest=5
-         # Get the list of image digest IDs
-         image_digests=$(aws ecr describe-images --repository-name my-docker-image --query 'imageDetails[*].[imageDigest]' --output json | jq -r '.[:'${keep_latest}'] | .[]')
-         # Iterate over image digest IDs and delete old images
-         for digest in ${image_digests}; do
-           aws ecr batch-delete-image --repository-name my-docker-image --image-ids imageDigest=${digest}
-         done
+         run: docker build -t my-docker-image .
+      - name: Tag Docker Image
+         run: docker tag my-docker-image ${{ secrets.AWS_ECR_REGISTRY }}/my-docker-image:${{ github.sha }}
+      - name: Push Docker Image to ECR
+          run: docker push ${{ secrets.AWS_ECR_REGISTRY }}/my-docker-image:${{ github.sha }}
+      - name: Cleanup Docker Images
+         run: |
+           # Define the number of images to keep (e.g., 5)
+            keep_latest=5
+            # Get the list of image digest IDs
+            image_digests=$(aws ecr describe-images --repository-name my-docker-image --query 'imageDetails[*].[imageDigest]' --output json | jq -r '.[:'${keep_latest}'] | .[]')
+            # Iterate over image digest IDs and delete old images
+            for digest in ${image_digests}; do
+              # Add the missing command here
+              aws ecr batch-delete-image --repository-name my-docker-image --image-ids imageDigest=${digest}
+            done
