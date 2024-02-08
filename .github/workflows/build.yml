@@ -17,7 +17,7 @@ jobs:
      # Name of the ECR repository
      ECR_REPOSITORY: my-app
      # Name of the image
-     IMAGE_NAME: n-image
+     IMAGE_NAME: n1-image
    # Steps of the job
    steps:
      # Checkout the code from the repository
@@ -50,15 +50,16 @@ jobs:
          aws ecr put-lifecycle-policy --repository-name $ECR_REPOSITORY --lifecycle-policy-text '{
           "rules": [
             {
-              "rulePriority": 1,
-              "description": "Keep only the last 2 images",
+             "rulePriority": 1,
+              "description": "Remove images older than 1 days",
               "selection": {
               "tagStatus": "any",
-              "countType": "imageCountMoreThan",
-              "countNumber": 2
+              "countType": "sinceImagePushed",
+              "countUnit": "days",
+              "countNumber": 1
             },
           "action": {
-           "type": "expire"
+          "type": "expire"
               }
            }
           ]}'
