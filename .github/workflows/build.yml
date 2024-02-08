@@ -56,7 +56,7 @@ jobs:
               "tagStatus": "any",
               "countType": "sinceImagePushed",
               "countUnit": "days",
-              "countNumber": 1
+              "countNumber": 0
             },
           "action": {
           "type": "expire"
