@@ -17,7 +17,7 @@ jobs:
      # Name of the ECR repository
      ECR_REPOSITORY: my-app
      # Name of the image
-     IMAGE_NAME: new-image
+     IMAGE_NAME: n-image
    # Steps of the job
    steps:
      # Checkout the code from the repository
