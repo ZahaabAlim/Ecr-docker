@@ -47,7 +47,7 @@ jobs:
      # Set lifecycle policy
      - name: Set lifecycle policy
        run: |
-         aws ecr put-lifecycle-policy --repository-name $ECR_REPOSITORY --lifecycle-policy-text '
+         aws ecr put-lifecycle-policy --repository-name $ECR_REPOSITORY --lifecycle-policy-text "
           rules:
             - rulePriority: 1
               description: Remove images older than 1 days
@@ -58,6 +58,7 @@ jobs:
                 countNumber: 1
               action:
                 type: expire
+            , # Added a comma here
             - rulePriority: 2
               description: Keep last 3 images
               selection:
@@ -66,4 +67,4 @@ jobs:
                 countNumber: 3
               action:
                 type: expire
-         '
+         "
