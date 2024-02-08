@@ -1,13 +1,13 @@
 name: Build and push to ECR
 # Trigger the workflow on push to the main branch
 on:
-push:
+ push:
    branches:
      - main
 # Define the jobs
 jobs:
-# Job to build and push the image
-build-and-push:
+ # Job to build and push the image
+ build-and-push:
    # Run the job on an Ubuntu runner
    runs-on: ubuntu-latest
    # Set some environment variables
@@ -17,7 +17,7 @@ build-and-push:
      # Name of the ECR repository
      ECR_REPOSITORY: my-app
      # Name of the image
-     IMAGE_NAME: new1-image
+     IMAGE_NAME: n2-image
    # Steps of the job
    steps:
      # Checkout the code from the repository
@@ -48,18 +48,18 @@ build-and-push:
      - name: Set lifecycle policy
        run: |
          aws ecr put-lifecycle-policy --repository-name $ECR_REPOSITORY --lifecycle-policy-text '{
-           "rules": [
-             {
-               "rulePriority": 1,
-               "description": "3 recent images",
-               "selection": {
-                 "tagStatus": "any",
-                 "countType": "imageCountMoreThan",
-                 "countNumber": 2
-               },
-               "action": {
-                 "type": "expire"
-               }
-             }
-           ]
-         }'
+          "rules": [
+            {
+             "rulePriority": 1,
+              "description": "Remove images older than 1 days",
+              "selection": {
+              "tagStatus": "any",
+              "countType": "sinceImagePushed",
+              "countUnit": "days",
+              "countNumber": 1
+            },
+          "action": {
+          "type": "expire"
+              }
+           }
+          ]}'
