@@ -47,33 +47,23 @@ jobs:
      # Set lifecycle policy
      - name: Set lifecycle policy
        run: |
-         aws ecr put-lifecycle-policy --repository-name $ECR_REPOSITORY --lifecycle-policy-text '{
-          "rules": [
-           {
-            "rulePriority": 1,
-             "description": "Remove images older than 1 days",
-             "selection": {
-             "tagStatus": "any",
-             "countType": "sinceImagePushed",
-             "countUnit": "days",
-              "countNumber": 1
-           },
-              "action": {
-              "type": "expire"
-            }
-          },
-          {
-          "rulePriority": 2,
-            "description": "Keep last 3 images",
-            "selection": {
-             "tagStatus": "any",
-              "countType": "imageCountMoreThan",
-              "countNumber": 3
-          },
-            "action": {
-              "type": "expire"
-            }
-            }
-            ]
-          }
-            '
+         aws ecr put-lifecycle-policy --repository-name $ECR_REPOSITORY --lifecycle-policy-text '
+          rules:
+            - rulePriority: 1
+              description: Remove images older than 1 days
+              selection:
+                tagStatus: any
+                countType: sinceImagePushed
+                countUnit: days
+                countNumber: 1
+              action:
+                type: expire
+            - rulePriority: 2
+              description: Keep last 3 images
+              selection:
+                tagStatus: any
+                countType: imageCountMoreThan
+                countNumber: 3
+              action:
+                type: expire
+         '
