@@ -44,3 +44,22 @@ jobs:
      # Push the image to ECR
      - name: Push the image to ECR
        run: docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_NAME
+     # Set lifecycle policy
+     - name: Set lifecycle policy
+       run: |
+         aws ecr put-lifecycle-policy --repository-name $ECR_REPOSITORY --lifecycle-policy-text '{
+           "rules": [
+             {
+               "rulePriority": 1,
+               "description": "3 recent images",
+               "selection": {
+                 "tagStatus": "any",
+                 "countType": "imageCountMoreThan",
+                 "countNumber": 2
+               },
+               "action": {
+                 "type": "expire"
+               }
+             }
+           ]
+         }'
