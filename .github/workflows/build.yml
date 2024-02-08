@@ -48,18 +48,17 @@ jobs:
      - name: Set lifecycle policy
        run: |
          aws ecr put-lifecycle-policy --repository-name $ECR_REPOSITORY --lifecycle-policy-text '{
-           "rules": [
-             {
-               "rulePriority": 1,
-               "description": "3 recent images",
-               "selection": {
-                 "tagStatus": "any",
-                 "countType": "imageCountMoreThan",
-                 "countNumber": 2
-               },
-               "action": {
-                 "type": "expire"
-               }
-             }
-           ]
-         }'
+          "rules": [
+            {
+              "rulePriority": 1,
+              "description": "Keep only the last 2 images",
+              "selection": {
+              "tagStatus": "any",
+              "countType": "imageCountMoreThan",
+              "countNumber": 2
+            },
+          "action": {
+           "type": "expire"
+              }
+           }
+          ]}'
