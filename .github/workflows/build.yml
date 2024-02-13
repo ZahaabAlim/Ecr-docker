@@ -2,7 +2,7 @@ name: Deploy Terraform
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   plan:
     runs-on: ubuntu-latest
