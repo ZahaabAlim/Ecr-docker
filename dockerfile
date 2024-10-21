@@ -5,7 +5,7 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copy the Python script into the container
-COPY factorial.py .
+COPY app.py .
 
 # Set the default command to run the Python script
-CMD ["python", "factorial.py", "5"]
+CMD ["python", "app.py", "5"]
