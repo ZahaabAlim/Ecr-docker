@@ -18,7 +18,7 @@ This workflow is also triggered on a push to the `main` branch. It uses Terrafor
 
 ## Python Script
 
-The `app.py` script calculates the factorial of a given number using a recursive function.
+The `app.py` script calculates the factorial of a given number using a recursive function. Python script (app.py) in this setup is to serve as a simple example application that can be containerized and deployed. 
 
 ## Dockerfile
 
