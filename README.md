@@ -4,25 +4,31 @@ This repository contains GitHub Actions workflows to build and push Docker image
 
 ## Summary
 
-This project automates the process of building Docker images, pushing them to Amazon ECR, and managing infrastructure using Terraform. It includes two GitHub Actions workflows: one for building and pushing Docker images, and another for deploying infrastructure with Terraform. Additionally, it provides a Python script to calculate the factorial of a number and a Dockerfile to containerize the script.
+This project automates the process of building Docker images, pushing them to Amazon ECR, and managing infrastructure using Terraform. It includes two GitHub Actions workflows: one for building and pushing Docker images, and another for deploying infrastructure with Terraform. The Terraform configuration sets up the AWS provider, configures the backend for state storage and locking, creates an ECR repository, and sets a lifecycle policy for image retention. Additionally, the project features a Python script to calculate the factorial of a number it serves as a simple example application to demonstrate the process of building, containerizing, and deploying an application and a Dockerfile to containerize the script It specifies the base image, sets the working directory inside the container, copies the Python script into the container, and sets the default command to run the script, demonstrating the complete CI/CD pipeline from code to deployment.
 
 ## Workflows
+Sure! Here are the summaries for each component:
 
-### Build and Push to ECR
+### Build and Push to ECR Workflow (`build.yaml`)
 
-This workflow is triggered on a push to the `main` branch. It builds a Docker image from the source code, tags it, and pushes it to an Amazon ECR repository. Additionally, it sets a lifecycle policy for the ECR repository.
+This GitHub Actions workflow is triggered on a push to the `main` branch. It automates the process of building a Docker image from the source code, tagging it, and pushing it to Amazon ECR. Additionally, it sets a lifecycle policy for the ECR repository to manage image retention.
 
-### Deploy Terraform
+### Deploy Terraform Workflow (`deploy.yaml`)
 
-This workflow is also triggered on a push to the `main` branch. It uses Terraform to manage infrastructure and deploys the Docker image to Amazon ECR.
+This GitHub Actions workflow is also triggered on a push to the `main` branch. It uses Terraform to manage AWS infrastructure, including creating an ECR repository and setting a lifecycle policy. It also builds, tags, and pushes the Docker image to Amazon ECR.
 
-## Python Script
+### Terraform Configuration (`main.tf`)
 
-The `app.py` script calculates the factorial of a given number using a recursive function. Python script (app.py) in this setup is to serve as a simple example application that can be containerized and deployed. 
+Terraform is used to manage the AWS infrastructure. It configures the AWS provider, sets up the backend to store the Terraform state in an S3 bucket and use a DynamoDB table for state locking, creates an ECR repository, and sets a lifecycle policy to manage Docker image retention.
 
-## Dockerfile
+### Python Script (`app.py`)
 
-The Dockerfile creates a Docker image for the Python script.
+The Python script calculates the factorial of a given number using a recursive function. It serves as a simple example application to demonstrate the process of building, containerizing, and deploying an application.
+
+### Dockerfile
+
+The Dockerfile defines how to build a Docker image for the Python script. It specifies the base image, sets the working directory inside the container, copies the Python script into the container, and sets the default command to run the script.
+
 
 ## Terraform Configuration
 
