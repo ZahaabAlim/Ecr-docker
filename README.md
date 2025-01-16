@@ -1,4 +1,4 @@
-# Build and Push to ECR
+## Automated Docker Image Build and Deployment
 
 This repository contains GitHub Actions workflows to build and push Docker images to Amazon ECR and deploy infrastructure using Terraform.
 
